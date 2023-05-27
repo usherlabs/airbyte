@@ -1,0 +1,108 @@
+version: 0.36.5
+
+definitions:
+  requester:
+    url_base: "{{config.api_url}}"
+    http_method: "GET"
+    authenticator:
+      type: CustomAuthenticator
+      class_name: source_binance.components.BinanceAuthenticator
+      api_key: '{{ config["api_key"] }}'
+      api_secret: '{{ config["api_secret"] }}'
+
+  retriever:
+    requester:
+      $ref: "#/definitions/requester"
+    paginator:
+      type: NoPagination
+    record_selector:
+      extractor:
+        field_path: []
+
+
+  paginated_retriever:
+    requester:
+      $ref: "#/definitions/requester"
+    paginator:
+      $ref: "#/definitions/list_paginator"
+    record_selector:
+      extractor:
+        field_path: []
+
+  list_paginator:
+    type: DefaultPaginator
+    page_size_option:
+      inject_into: "request_parameter"
+      field_name: "limit"
+    pagination_strategy:
+      type: "OffsetIncrement"
+      page_size: 1000
+    page_token_option:
+      type: RequestOption
+      inject_into: "request_parameter"
+      field_name: "offset"
+# If both startTime and endTimeare sent, time between startTimeand endTimemust be less than 90 days.
+  date_based_incremental_sync:
+    type: DatetimeBasedCursor
+    cursor_field: "{{parameters['sync_cursor_field']}}"
+
+    end_datetime:
+      datetime: "{{ today_utc() }}"
+      datetime_format: "%Y-%m-%d"
+    datetime_format: "%Y-%m-%dT%H:%M:%S.%f%z"
+    cursor_granularity: "PT0.000001S"
+    start_datetime:
+      datetime: "{{ config['start_date'] }}"
+      datetime_format: "%Y-%m-%d"
+    step: "P90D"
+
+
+  base_stream:
+    retriever:
+      $ref: "#/definitions/retriever"
+    transformations:
+      - type: CustomTransformation
+        class_name: source_binance.components.DefaultTransform
+
+  pagination_stream:
+    retriever:
+      $ref: "#/definitions/paginated_retriever"
+    incremental_sync:
+      $ref: "#/definitions/date_based_incremental_sync"
+    transformations:
+      - type: CustomTransformation
+        class_name: source_binance.components.DefaultTransform
+
+
+  user_coins_stream:
+    $ref: "#/definitions/base_stream"
+    $parameters:
+      name: "user_coins"
+      primary_key: "coin"
+      path: "/sapi/v1/capital/config/getall"
+
+  deposit_history_stream:
+    $ref: "#/definitions/pagination_stream"
+    $parameters:
+      name: "deposit_history"
+      primary_key: "coin"
+      path: "/sapi/v1/capital/deposit/hisrec"
+      sync_cursor_field: "insertTime"
+
+  withdraw_history_stream:
+    $ref: "#/definitions/pagination_stream"
+    $parameters:
+      name: "withdraw_history"
+      primary_key: "coin"
+      path: "/sapi/v1/capital/withdraw/history"
+      sync_cursor_field: "applyTime"
+
+check:
+  stream_names:
+    - user_coins
+    - deposit_history
+    - withdraw_history
+streams:
+  - "$ref": "#/definitions/user_coins_stream"
+  - "$ref": "#/definitions/deposit_history_stream"
+  - "$ref": "#/definitions/withdraw_history_stream"
