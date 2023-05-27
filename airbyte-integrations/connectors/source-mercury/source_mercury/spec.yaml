@@ -1,0 +1,21 @@
+documentation_url: https://docs.mercury.com/
+connectionSpecification:
+  $schema: http://json-schema.org/draft-07/schema#
+  title: Mercury Source Spec
+  type: object
+  required:
+    - api_user
+    - api_password
+    - api_url
+  properties:
+    api_user:
+      type: string
+      description: Your Mercury API user.
+      airbyte_secret: true
+    api_password:
+      type: string
+      description: Your Mercury API password.
+      airbyte_secret: true
+    api_url:
+        type: string
+        description: Your Mercury API URL.

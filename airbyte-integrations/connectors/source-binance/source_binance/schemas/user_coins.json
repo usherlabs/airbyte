@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "coin": {
+      "type": "string"
+    },
+    "depositAllEnable": {
+      "type": "boolean"
+    },
+    "free": {
+      "type": "number"
+    },
+    "freeze": {
+      "type": "number"
+    },
+    "ipoable": {
+      "type": "number"
+    },
+    "ipoing": {
+      "type": "number"
+    },
+    "isLegalMoney": {
+      "type": "boolean"
+    },
+    "locked": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "networkList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "addressRegex": {
+            "type": "string"
+          },
+          "coin": {
+            "type": "string"
+          },
+          "depositDesc": {
+            "type": "string"
+          },
+          "depositEnable": {
+            "type": "boolean"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "memoRegex": {
+            "type": "string"
+          },
+          "minConfirm": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "network": {
+            "type": "string"
+          },
+          "resetAddressStatus": {
+            "type": "boolean"
+          },
+          "specialTips": {
+            "type": "string"
+          },
+          "unLockConfirm": {
+            "type": "integer"
+          },
+          "withdrawDesc": {
+            "type": "string"
+          },
+          "withdrawEnable": {
+            "type": "boolean"
+          },
+          "withdrawFee": {
+            "type": "number"
+          },
+          "withdrawIntegerMultiple": {
+            "type": "number"
+          },
+          "withdrawMax": {
+            "type": "number"
+          },
+          "withdrawMin": {
+            "type": "number"
+          },
+          "sameAddress": {
+            "type": "boolean"
+          },
+          "estimatedArrivalTime": {
+            "type": "integer"
+          },
+          "busy": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "storage": {
+      "type": "number"
+    },
+    "trading": {
+      "type": "boolean"
+    },
+    "withdrawAllEnable": {
+      "type": "boolean"
+    },
+    "withdrawing": {
+      "type": "number"
+    }
+  }
+}

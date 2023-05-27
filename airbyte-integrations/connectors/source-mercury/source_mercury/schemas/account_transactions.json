@@ -1,0 +1,326 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "account_id": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "bankDescription": {
+      "type": ["string", "null"]
+    },
+    "counterpartyId": {
+      "type": "string"
+    },
+    "counterpartyName": {
+      "type": "string"
+    },
+    "counterpartyNickname": {
+      "type": ["string", "null"]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "airbyte_type": "timestamp_with_timezone"
+    },
+    "dashboardLink": {
+      "type": "string"
+    },
+    "details": {
+      "type": ["object", "null"],
+      "properties": {
+        "address": {
+          "type": ["object", "null"],
+          "properties": {
+            "address1": {
+              "type": "string"
+            },
+            "address2": {
+              "type": ["string", "null"]
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": ["string", "null"],
+              "pattern": "^[A-Z]{2}$"
+            },
+            "postalCode": {
+              "type": "string"
+            }
+          }
+        },
+        "domesticWireRoutingInfo": {
+          "type": ["object", "null"],
+          "properties": {
+            "bankName": {
+              "type": ["string", "null"]
+            },
+            "accountNumber": {
+              "type": "string"
+            },
+            "routingNumber": {
+              "type": "string"
+            },
+            "address": {
+              "type": ["object", "null"],
+              "properties": {
+                "address1": {
+                  "type": "string"
+                },
+                "address2": {
+                  "type": ["string", "null"]
+                },
+                "city": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "postalCode": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "electronicRoutingInfo": {
+          "type": ["object", "null"],
+          "properties": {
+            "accountNumber": {
+              "type": "string"
+            },
+            "routingnumber": {
+              "type": "string"
+            },
+            "bankName": {
+              "type": ["string", "null"]
+            }
+          }
+        },
+        "internationalWireRoutingInfo": {
+          "type": ["object", "null"],
+          "properties": {
+            "iban": {
+              "type": "string"
+            },
+            "swiftCode": {
+              "type": "string"
+            },
+            "correspondentInfo": {
+              "type": ["object", "null"],
+              "properties": {
+                "routingNumber": {
+                  "type": ["string", "null"]
+                },
+                "swiftCode": {
+                  "type": ["string", "null"]
+                },
+                "bankName": {
+                  "type": ["string", "null"]
+                }
+              }
+            },
+            "bankDetails": {
+              "type": ["object", "null"],
+              "properties": {
+                "bankName": {
+                  "type": "string"
+                },
+                "cityState": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            },
+            "address": {
+              "type": ["object", "null"],
+              "properties": {
+                "address1": {
+                  "type": "string"
+                },
+                "address2": {
+                  "type": ["string", "null"]
+                },
+                "city": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "postalCode": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            },
+            "phoneNumber": {
+              "type": ["string", "null"]
+            },
+            "countrySpecific": {
+              "type": "object",
+              "properties": {
+                "countrySpecificDataCanada": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "bankCode": {
+                      "type": "string"
+                    },
+                    "transitNumber": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "countrySpecificDataAustralia": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "bsbCode": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "countrySpecificDataIndia": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "ifscCode": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "countrySpecificDataRussia": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "inn": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "countrySpecificDataPhilippines": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "routingNumber": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "countrySpecificDataSouthAfrica": {
+                  "type": ["object", "null"],
+                  "properties": {
+                    "branchCode": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "debitCardInfo": {
+          "type": ["object", "null"],
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "estimatedDeliveryDate": {
+      "type": "string",
+      "format": "date-time",
+      "airbyte_type": "timestamp_with_timezone"
+    },
+    "failedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "airbyte_type": "timestamp_with_timezone"
+    },
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "externalTransfer",
+        "internalTransfer",
+        "outgoingPayment",
+        "debitCardTransaction",
+        "incomingDomesticWire",
+        "checkDeposit",
+        "incomingInternationalWire",
+        "fee",
+        "other"
+      ]
+    },
+    "note": {
+      "type": ["string", "null"]
+    },
+    "externalMemo": {
+      "type": ["string", "null"]
+    },
+    "postedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "airbyte_type": "timestamp_with_timezone"
+    },
+    "reasonForFailure": {
+      "type": ["string", "null"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "sent", "cancelled", "failed"]
+    },
+    "feeId": {
+      "type": ["string", "null"]
+    },
+    "currencyExchangeInfo": {
+      "type": ["object", "null"],
+      "properties": {
+        "convertedFromCurrency": {
+          "type": "string"
+        },
+        "convertedToCurrency": {
+          "type": "string"
+        },
+        "convertedFromAmount": {
+          "type": "number"
+        },
+        "convertedToAmount": {
+          "type": "number"
+        },
+        "feeAmount": {
+          "type": "number"
+        },
+        "feePercentage": {
+          "type": "number"
+        },
+        "exchangeRate": {
+          "type": "number"
+        },
+        "feeTransactionId": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "amount",
+    "counterpartyId",
+    "counterpartyName",
+    "createdAt",
+    "dashboardLink",
+    "estimatedDeliveryDate",
+    "id",
+    "kind",
+    "status"
+  ]
+}
