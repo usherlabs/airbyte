@@ -22,4 +22,4 @@ connectionSpecification:
       title: Start Date
       format: date
   additionalProperties: true
-documentation_url: https://example.org
+documentation_url: https://binance-docs.github.io/apidocs/spot/en/

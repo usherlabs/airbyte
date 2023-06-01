@@ -1,15 +1,20 @@
-import time
+import datetime
 import urllib.parse
-from airbyte_cdk.sources.declarative.auth.declarative_authenticator import NoAuth
-from airbyte_cdk.sources.declarative.interpolation.interpolated_string import InterpolatedString
-from airbyte_cdk.sources.declarative.transformations.transformation import RecordTransformation
-from airbyte_cdk.sources.declarative.types import Config, Record, StreamSlice, StreamState
-from airbyte_cdk.sources.utils.transform import TransformConfig, TypeTransformer
+from dataclasses import InitVar
 from dataclasses import dataclass
-from requests.models import PreparedRequest
 from typing import Mapping, Any
 from typing import Optional
 from typing import Union
+
+import time
+from airbyte_cdk.sources.declarative.auth.declarative_authenticator import NoAuth
+from airbyte_cdk.sources.declarative.incremental import DatetimeBasedCursor
+from airbyte_cdk.sources.declarative.interpolation.interpolated_string import InterpolatedString
+from airbyte_cdk.sources.declarative.schema import JsonFileSchemaLoader
+from airbyte_cdk.sources.declarative.transformations import RecordTransformation
+from airbyte_cdk.sources.declarative.types import Config, Record, StreamSlice, StreamState
+from airbyte_cdk.sources.utils.transform import TransformConfig, TypeTransformer
+from requests.models import PreparedRequest
 
 from source_binance.utils import get_signature
 
@@ -45,10 +50,15 @@ class BinanceAuthenticator(NoAuth):
 
 
 @dataclass
-class DefaultTransform(RecordTransformation):
+class CastingTransform(RecordTransformation):
     """
     Default transformation that does not change anything.
     """
+    config: Config
+    parameters: InitVar[Mapping[str, Any]]
+
+    def __post_init__(self, parameters: Mapping[str, Any]):
+        self.name = parameters.get("name")
 
     def transform(
             self,
@@ -58,7 +68,25 @@ class DefaultTransform(RecordTransformation):
             stream_slice: Optional[StreamSlice] = None,
     ) -> Record:
         transformer = TypeTransformer(TransformConfig.DefaultSchemaNormalization)
-        return transformer.transform(record)
+        schema = self._get_schema_root_properties()
+
+        return transformer.transform(record, schema)
+
+    def _get_schema_root_properties(self):
+        schema_loader = JsonFileSchemaLoader(config=self.config, parameters={"name": self.name})
+        schema = schema_loader.get_json_schema()
+        return schema
 
     def __eq__(self, other):
         return other.__dict__ == self.__dict__
+
+
+@dataclass
+class CustomDatetimeIncrementalSync(DatetimeBasedCursor):
+    def parse_date(self, date: str) -> datetime.datetime:
+        # if date time format is %s and have more than 10 digits, then it is in milisseconds
+        if self.datetime_format == "%s" and len(str(date)) > 10:
+            date_in_seconds = int(date) / 1000
+            return self._parser.parse(date_in_seconds, self.datetime_format)
+
+        return self._parser.parse(date, self.datetime_format)

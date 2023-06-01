@@ -18,4 +18,7 @@ connectionSpecification:
       airbyte_secret: true
     api_url:
         type: string
+        enum:
+          - https://api-sandbox.mercury.com
+          - https://api.mercury.com
         description: Your Mercury API URL.

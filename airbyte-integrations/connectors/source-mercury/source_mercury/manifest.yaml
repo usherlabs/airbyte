@@ -27,7 +27,6 @@ definitions:
         record_selector:
           extractor:
             field_path: [ "accounts" ]
-
     $parameters:
       name: "accounts"
       primary_key: "id"
@@ -39,7 +38,6 @@ definitions:
       path: "/api/v1/account/{{stream_partition.account_id}}/transactions"
       primary_key: "id"
       name: "account_transactions"
-
     retriever:
       $ref: "#/definitions/retriever"
       partition_router:

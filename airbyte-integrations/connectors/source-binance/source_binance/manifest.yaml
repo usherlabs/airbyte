@@ -41,20 +41,6 @@ definitions:
       type: RequestOption
       inject_into: "request_parameter"
       field_name: "offset"
-# If both startTime and endTimeare sent, time between startTimeand endTimemust be less than 90 days.
-  date_based_incremental_sync:
-    type: DatetimeBasedCursor
-    cursor_field: "{{parameters['sync_cursor_field']}}"
-
-    end_datetime:
-      datetime: "{{ today_utc() }}"
-      datetime_format: "%Y-%m-%d"
-    datetime_format: "%Y-%m-%dT%H:%M:%S.%f%z"
-    cursor_granularity: "PT0.000001S"
-    start_datetime:
-      datetime: "{{ config['start_date'] }}"
-      datetime_format: "%Y-%m-%d"
-    step: "P90D"
 
 
   base_stream:
@@ -62,16 +48,14 @@ definitions:
       $ref: "#/definitions/retriever"
     transformations:
       - type: CustomTransformation
-        class_name: source_binance.components.DefaultTransform
+        class_name: source_binance.components.CastingTransform
 
   pagination_stream:
     retriever:
       $ref: "#/definitions/paginated_retriever"
-    incremental_sync:
-      $ref: "#/definitions/date_based_incremental_sync"
     transformations:
       - type: CustomTransformation
-        class_name: source_binance.components.DefaultTransform
+        class_name: source_binance.components.CastingTransform
 
 
   user_coins_stream:
@@ -83,19 +67,44 @@ definitions:
 
   deposit_history_stream:
     $ref: "#/definitions/pagination_stream"
+    incremental_sync:
+      type: CustomIncrementalSync
+      class_name: source_binance.components.CustomDatetimeIncrementalSync
+      cursor_field: "insertTime"
+
+      end_datetime:
+        datetime: "{{ today_utc() }}"
+        datetime_format: "%Y-%m-%d"
+      datetime_format: "%s"
+      cursor_granularity: "PT1S"
+      start_datetime:
+        datetime: "{{ config['start_date'] }}"
+        datetime_format: "%Y-%m-%d"
+      step: "P90D"
     $parameters:
       name: "deposit_history"
-      primary_key: "coin"
+      primary_key: "id"
       path: "/sapi/v1/capital/deposit/hisrec"
-      sync_cursor_field: "insertTime"
 
   withdraw_history_stream:
     $ref: "#/definitions/pagination_stream"
+    incremental_sync:
+      type: DatetimeBasedCursor
+      cursor_field: "applyTime"
+
+      end_datetime:
+        datetime: "{{ today_utc() }}"
+        datetime_format: "%Y-%m-%d"
+      datetime_format: "%Y-%m-%d %H:%M:%S"
+      cursor_granularity: "PT1S"
+      start_datetime:
+        datetime: "{{ config['start_date'] }}"
+        datetime_format: "%Y-%m-%d"
+      step: "P90D"
     $parameters:
       name: "withdraw_history"
-      primary_key: "coin"
+      primary_key: "id"
       path: "/sapi/v1/capital/withdraw/history"
-      sync_cursor_field: "applyTime"
 
 check:
   stream_names:
