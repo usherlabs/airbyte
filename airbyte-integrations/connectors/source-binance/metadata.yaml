@@ -1,0 +1,20 @@
+data:
+  allowedHosts:
+    hosts:
+      - TODO # Please change to the hostname of the source.
+  registries:
+    oss:
+      enabled: false
+  connectorSubtype: api
+  connectorType: source
+  definitionId: 65b3b67b-8aaa-44bc-b0f4-e300199f3c7f
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-binance
+  githubIssueLabel: source-binance
+  icon: binance.svg
+  license: MIT
+  name: Binance
+  releaseDate: TODO
+  releaseStage: alpha
+  supportUrl: https://docs.airbyte.com/integrations/sources/binance
+metadataSpecVersion: "1.0"

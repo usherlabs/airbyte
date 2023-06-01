@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "positions_distribution_by_type": {
+          "type": "object",
+          "properties": {
+            "wallet": {
+              "type": "number"
+            },
+            "deposited": {
+              "type": "number"
+            },
+            "borrowed": {
+              "type": "number"
+            },
+            "locked": {
+              "type": "number"
+            },
+            "staked": {
+              "type": "number"
+            }
+          }
+        },
+        "positions_distribution_by_chain": {
+          "type": "object",
+          "properties": {
+            "arbitrum": {
+              "type": "number"
+            },
+            "aurora": {
+              "type": "number"
+            },
+            "avalanche": {
+              "type": "number"
+            },
+            "binance-smart-chain": {
+              "type": "number"
+            },
+            "ethereum": {
+              "type": "number"
+            },
+            "fantom": {
+              "type": "number"
+            },
+            "loopring": {
+              "type": "integer"
+            },
+            "optimism": {
+              "type": "number"
+            },
+            "polygon": {
+              "type": "number"
+            },
+            "solana": {
+              "type": "integer"
+            },
+            "xdai": {
+              "type": "number"
+            }
+          }
+        },
+        "total": {
+          "type": "object",
+          "properties": {
+            "positions": {
+              "type": "number"
+            }
+          }
+        },
+        "changes": {
+          "type": "object",
+          "properties": {
+            "absolute_1d": {
+              "type": "number"
+            },
+            "percent_1d": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+data:
+  allowedHosts:
+    hosts:
+      - TODO # Please change to the hostname of the source.
+  registries:
+    oss:
+      enabled: false
+  connectorSubtype: api
+  connectorType: source
+  definitionId: 50d96878-d180-4ba2-9aa3-cb23a71d3571
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-zerion
+  githubIssueLabel: source-zerion
+  icon: zerion.svg
+  license: MIT
+  name: Zerion
+  releaseDate: TODO
+  releaseStage: alpha
+  supportUrl: https://docs.airbyte.com/integrations/sources/zerion
+metadataSpecVersion: "1.0"

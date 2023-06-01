@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "transactionFee": {
+      "type": "number"
+    },
+    "coin": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "string"
+    },
+    "txId": {
+      "type": "string"
+    },
+    "applyTime": {
+      "type": "string",
+      "format": "date-time",
+      "airbyte_type": "timestamp_without_timezone"
+    },
+    "network": {
+      "type": "string"
+    },
+    "transferType": {
+      "type": "integer"
+    },
+    "withdrawOrderId": {
+      "type": "string"
+    },
+    "info": {
+      "type": "string"
+    },
+    "confirmNo": {
+      "type": "integer"
+    },
+    "walletType": {
+      "type": "integer"
+    },
+    "txKey": {
+      "type": "string"
+    },
+    "completeTime": {
+      "type": "string",
+      "format": "date-time",
+      "airbyte_type": "timestamp_without_timezone"
+    }
+  }
+}

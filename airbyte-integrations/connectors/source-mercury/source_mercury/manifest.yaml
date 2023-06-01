@@ -1,0 +1,90 @@
+version: "0.30.0"
+
+definitions:
+  requester:
+    url_base: "{{config.api_url}}"
+    http_method: "GET"
+    authenticator:
+      type: BasicHttpAuthenticator
+      username: '{{config.api_user}}'
+      password: '{{config.api_password}}'
+
+  retriever:
+    requester:
+      $ref: "#/definitions/requester"
+    paginator:
+      type: NoPagination
+
+  base_stream:
+    retriever:
+      $ref: "#/definitions/retriever"
+
+  # STREAMS
+  accounts_stream:
+    $ref: "#/definitions/base_stream"
+    retriever:
+        $ref: "#/definitions/retriever"
+        record_selector:
+          extractor:
+            field_path: [ "accounts" ]
+    $parameters:
+      name: "accounts"
+      primary_key: "id"
+      path: "/api/v1/accounts"
+
+  account_transactions_stream:
+    $ref: "#/definitions/base_stream"
+    $parameters:
+      path: "/api/v1/account/{{stream_partition.account_id}}/transactions"
+      primary_key: "id"
+      name: "account_transactions"
+    retriever:
+      $ref: "#/definitions/retriever"
+      partition_router:
+        type: SubstreamPartitionRouter
+        parent_stream_configs:
+          - stream: "#/definitions/accounts_stream"
+            parent_key: "id"
+            partition_field: "account_id"
+      record_selector:
+        extractor:
+          field_path: [ "transactions" ]
+      paginator:
+        type: "DefaultPaginator"
+        pagination_strategy:
+          type: "OffsetIncrement"
+          cursor_value: "{{ last_records[-1]['createdAt'] }}"
+          page_size: 500
+          stop_condition: "{{ response['total'] < 500 }}"
+        page_size_option:
+          field_name: "limit"
+          inject_into: "request_parameter"
+
+        page_token_option:
+          type: "RequestOption"
+          field_name: "start"
+          inject_into: "request_parameter"
+      incremental_sync:
+        type: "DatetimeBasedCursor"
+        datetime_format: "%Y-%m-%dT%H:%M:%S.%f%z"
+        cursor_granularity: "PT0.000001S"
+        step: "P1D"
+        cursor_field: "createdAt"
+
+    transformations:
+      - type: AddFields
+        fields:
+          - path: [ "account_id" ]
+            value: "{{ stream_partition.account_id }}"
+
+
+streams:
+  - "#/definitions/accounts_stream"
+  - "#/definitions/account_transactions_stream"
+
+check:
+  stream_names:
+    - "accounts"
+    - "account_transactions"
+
+

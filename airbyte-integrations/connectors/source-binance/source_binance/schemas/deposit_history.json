@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "coin": {
+      "type": "string"
+    },
+    "network": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "string"
+    },
+    "addressTag": {
+      "type": "string"
+    },
+    "txId": {
+      "type": "string"
+    },
+    "insertTime": {
+      "type": "integer"
+    },
+    "transferType": {
+      "type": "integer"
+    },
+    "confirmTimes": {
+      "type": "string"
+    },
+    "unlockConfirm": {
+      "type": "integer"
+    },
+    "walletType": {
+      "type": "integer"
+    }
+  }
+}

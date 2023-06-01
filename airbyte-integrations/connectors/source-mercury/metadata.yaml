@@ -1,0 +1,20 @@
+data:
+  allowedHosts:
+    hosts:
+      - TODO # Please change to the hostname of the source.
+  registries:
+    oss:
+      enabled: false
+  connectorSubtype: api
+  connectorType: source
+  definitionId: a83af0f6-338f-415e-864c-1b27eaab3b31
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-mercury
+  githubIssueLabel: source-mercury
+  icon: mercury.svg
+  license: MIT
+  name: Mercury
+  releaseDate: TODO
+  releaseStage: alpha
+  supportUrl: https://docs.airbyte.com/integrations/sources/mercury
+metadataSpecVersion: "1.0"

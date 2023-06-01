@@ -1,0 +1,78 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "accountNumber" : {
+      "type" : "string"
+    },
+    "availableBalance" : {
+      "type" : "number"
+    },
+    "createdAt" : {
+      "type" : "string",
+      "format" : "date-time",
+      "airbyte_type": "timestamp_with_timezone"
+    },
+    "currentBalance" : {
+      "type" : "number"
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "kind" : {
+      "type" : "string"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "routingNumber" : {
+      "type" : "string"
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [
+        "active",
+        "deleted",
+        "pending",
+        "archived"
+      ]
+    },
+    "type" : {
+      "type" : "string",
+      "enum" : [
+        "mercury",
+        "external",
+        "recipient"
+      ]
+    },
+    "canReceiveTransactions" : {
+      "type" : [
+        "boolean",
+        "null"
+      ]
+    },
+    "nickname" : {
+      "type" : [
+        "string",
+        "null"
+      ]
+    },
+    "legalBusinessName" : {
+      "type" : "string"
+    }
+  },
+  "required" : [
+    "accountNumber",
+    "availableBalance",
+    "createdAt",
+    "currentBalance",
+    "id",
+    "kind",
+    "name",
+    "routingNumber",
+    "status",
+    "type",
+    "canReceiveTransactions",
+    "legalBusinessName"
+  ]
+}

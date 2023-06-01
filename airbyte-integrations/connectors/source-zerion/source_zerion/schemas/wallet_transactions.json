@@ -1,0 +1,297 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "properties" : {
+    "type" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "string"
+    },
+    "attributes" : {
+      "type" : "object",
+      "properties" : {
+        "operation_type" : {
+          "type" : "string",
+          "enum" : [
+            "approve",
+            "borrow",
+            "burn",
+            "cancel",
+            "claim",
+            "deploy",
+            "deposit",
+            "execute",
+            "mint",
+            "receive",
+            "repay",
+            "send",
+            "stake",
+            "trade",
+            "unstake",
+            "withdraw"
+          ]
+        },
+        "hash" : {
+          "type" : "string"
+        },
+        "mined_at_block" : {
+          "type" : "number"
+        },
+        "mined_at" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "sent_from" : {
+          "type" : "string"
+        },
+        "sent_to" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [
+            "confirmed",
+            "failed",
+            "pending"
+          ]
+        },
+        "nonce" : {
+          "type" : "number"
+        },
+        "fee" : {
+          "type" : "object",
+          "properties" : {
+            "fungible_info" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "type" : [
+                    "null",
+                    "string"
+                  ]
+                },
+                "symbol" : {
+                  "type" : [
+                    "null",
+                    "string"
+                  ]
+                },
+                "description" : {
+                  "type" : [
+                    "null",
+                    "string"
+                  ]
+                },
+                "icon" : {
+                  "type" : "object",
+                  "properties" : {
+                    "url" : {
+                      "type" : [
+                        "null",
+                        "string"
+                      ],
+                      "format" : "uri"
+                    }
+                  },
+                  "required" : [
+                    "url"
+                  ]
+                },
+                "flags" : {
+                  "type" : "object"
+                },
+                "implementations" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "chain_id" : {
+                        "type" : "string"
+                      },
+                      "address" : {
+                        "type" : "string"
+                      },
+                      "decimals" : {
+                        "type" : "integer"
+                      }
+                    },
+                    "required" : [
+                      "chain_id",
+                      "decimals"
+                    ]
+                  }
+                }
+              },
+              "required" : [
+                "name",
+                "symbol",
+                "description",
+                "icon",
+                "flags",
+                "implementations"
+              ]
+            },
+            "quantity" : {
+              "type" : "object",
+              "properties" : {
+                "int" : {
+                  "type" : "string"
+                },
+                "decimals" : {
+                  "type" : "integer"
+                },
+                "float" : {
+                  "type" : "number"
+                },
+                "numeric" : {
+                  "type" : "string"
+                },
+                "price" : {
+                  "type" : "number"
+                },
+                "value" : {
+                  "type" : "number"
+                }
+              },
+              "required" : [
+                "int",
+                "decimals",
+                "float",
+                "numeric",
+                "price",
+                "value"
+              ]
+            }
+          },
+          "required" : [
+            "fungible_info",
+            "quantity"
+          ]
+        },
+        "transfers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "fungible_info" : {
+                "$ref" : "#/properties/data/items/properties/attributes/properties/fee/properties/fungible_info"
+              },
+              "nft_info" : {
+                "type" : "object"
+              },
+              "direction" : {
+                "type" : "string",
+                "enum" : [
+                  "in",
+                  "out",
+                  "self"
+                ]
+              },
+              "quantity" : {
+                "$ref" : "#/properties/data/items/properties/attributes/properties/fee/properties/quantity"
+              },
+              "value" : {
+                "type" : "number"
+              },
+              "price" : {
+                "type" : "number"
+              },
+              "sender" : {
+                "type" : "string"
+              },
+              "recipient" : {
+                "type" : "string"
+              }
+            },
+            "required" : [
+              "fungible_info",
+              "nft_info",
+              "direction",
+              "quantity",
+              "value",
+              "price",
+              "sender",
+              "recipient"
+            ]
+          }
+        },
+        "approvals" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "fungible_info" : {
+                "$ref" : "#/properties/data/items/properties/attributes/properties/fee/properties/fungible_info"
+              },
+              "nft_info" : {
+                "type" : "object"
+              },
+              "contract_address" : {
+                "type" : "string"
+              },
+              "token_id" : {
+                "type" : [
+                  "null",
+                  "string"
+                ]
+              },
+              "name" : {
+                "type" : "string"
+              },
+              "interface" : {
+                "type" : "string",
+                "enum" : [
+                  "erc721",
+                  "erc1155"
+                ]
+              },
+              "content" : {
+                "type" : "object"
+              },
+              "quantity" : {
+                "$ref" : "#/properties/data/items/properties/attributes/properties/fee/properties/quantity"
+              },
+              "sender" : {
+                "type" : "string"
+              }
+            },
+            "required" : [
+              "fungible_info",
+              "nft_info",
+              "contract_address",
+              "token_id",
+              "name",
+              "interface",
+              "content",
+              "quantity",
+              "sender"
+            ]
+          }
+        },
+        "relationships" : {
+          "type" : "object"
+        }
+      },
+      "required" : [
+        "operation_type",
+        "hash",
+        "mined_at_block",
+        "mined_at",
+        "sent_from",
+        "sent_to",
+        "status",
+        "nonce",
+        "fee",
+        "transfers",
+        "approvals",
+        "relationships"
+      ]
+    }
+  },
+  "required" : [
+    "type",
+    "id",
+    "attributes"
+  ]
+}

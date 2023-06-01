@@ -1,0 +1,51 @@
+{
+  "stream": "account_transactions",
+  "data": {
+    "id": "7fac58aa-f8d4-11ed-89d5-c71660148499",
+    "feeId": null,
+    "amount": 9.02,
+    "createdAt": "2023-05-22T19:11:46.314871Z",
+    "postedAt": "2023-05-22T19:11:46.313215Z",
+    "estimatedDeliveryDate": "2023-04-22T19:11:46.313215Z",
+    "status": "sent",
+    "note": null,
+    "bankDescription": null,
+    "externalMemo": null,
+    "counterpartyId": "7f530912-f8d4-11ed-8764-b3922277a9d3",
+    "details": {
+      "address": null,
+      "electronicRoutingInfo": null,
+      "domesticWireRoutingInfo": null,
+      "internationalWireRoutingInfo": null,
+      "debitCardInfo": null
+    },
+    "reasonForFailure": null,
+    "failedAt": null,
+    "dashboardLink": "https://mercury.com/transactions/7fac58aa-f8d4-11ed-89d5-c71660148499",
+    "counterpartyName": "AK Subs",
+    "counterpartyNickname": null,
+    "kind": "checkDeposit",
+    "currencyExchangeInfo": null,
+    "account_id": "7faa72b0-f8d4-11ed-89c3-8f911b252bac"
+  },
+  "emitted_at": 1685386627952
+}
+{
+  "stream": "accounts",
+  "data": {
+    "id": "7f624328-f8d4-11ed-87af-07c01d72ed7d",
+    "accountNumber": "21275360664",
+    "routingNumber": "051502395",
+    "name": "Mercury Checking \u2022\u20220664",
+    "status": "active",
+    "type": "mercury",
+    "createdAt": "2023-05-22T19:11:46.314871Z",
+    "availableBalance": 999863.91,
+    "currentBalance": 999867.41,
+    "kind": "checking",
+    "canReceiveTransactions": null,
+    "nickname": null,
+    "legalBusinessName": "Not A Real Company Inc."
+  },
+  "emitted_at": 1685386623921
+}
